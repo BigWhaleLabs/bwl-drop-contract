@@ -1,4 +1,5 @@
 import { ethers, run } from 'hardhat'
+import prompt from 'prompt'
 
 async function main() {
   const [deployer] = await ethers.getSigners()
@@ -14,14 +15,25 @@ async function main() {
     3: 'ropsten',
     4: 'rinkeby',
     5: 'goerli',
+    137: 'polygon',
+    80001: 'mumbai',
   } as { [chainId: number]: string }
   const chainName = chains[chainId]
 
-  const contractName = 'MyERC721'
-  const contractSymbol = 'MYERC721'
+  const { tokenURI } = await prompt.get({
+    properties: {
+      tokenURI: {
+        required: true,
+        type: 'string',
+        message: 'Token URI',
+      },
+    },
+  })
+
+  const contractName = 'SCNikitaAppreciatesYou'
   console.log(`Deploying ${contractName}...`)
-  const Contract = await ethers.getContractFactory(contractName)
-  const contract = await Contract.deploy(contractName, contractSymbol)
+  const factory = await ethers.getContractFactory(contractName)
+  const contract = await factory.deploy(tokenURI)
 
   console.log('Deploy tx gas price:', contract.deployTransaction.gasPrice)
   console.log('Deploy tx gas limit:', contract.deployTransaction.gasLimit)
@@ -37,7 +49,7 @@ async function main() {
   try {
     await run('verify:verify', {
       address,
-      constructorArguments: [contractName, contractSymbol],
+      constructorArguments: [tokenURI],
     })
   } catch (err) {
     console.log(
@@ -53,7 +65,7 @@ async function main() {
     'Etherscan URL:',
     `https://${
       chainName !== 'mainnet' ? `${chainName}.` : ''
-    }etherscan.io/address/${address}`
+    }polygonscan.com/address/${address}`
   )
 }
 
