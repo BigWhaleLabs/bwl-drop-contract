@@ -42,6 +42,6 @@
         "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
       }
     ],
-    "import/prefer-default-export": "error"
+    "import/prefer-default-export": "off"
   }
 }

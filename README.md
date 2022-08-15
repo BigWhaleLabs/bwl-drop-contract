@@ -1,10 +1,8 @@
-# Solidity Ethereum smart contract starter
-
-Heavily influenced by the [Big Whale Labs repos](https://github.com/BigWhaleLabs).
+# Commemorative NFT collection for early adopters
 
 ## Usage
 
-1. Clone the repository with `git clone git@github.com:Borodutch/smart-contract-starter`
+1. Clone the repository with `git clone git@github.com:BigWhaleLabs/seal-cred-nft-drop-contract`
 2. Install the dependencies with `yarn`
 3. Add environment variables to your `.env` file
 4. Run the scripts below
@@ -25,6 +23,7 @@ Also check out the `.env.sample` file for more information.
 - `yarn build` — compiles the contract ts interface to the `typechain` directory
 - `yarn test` — runs the test suite
 - `yarn deploy` — deploys the contract to the network
+- `yarn drop` — mint NFTs across all the addresses
 - `yarn eth-lint` — runs the linter for the solidity contract
 - `yarn lint` — runs all the linters
 - `yarn prettify` — prettifies the code in th project
