@@ -20,20 +20,25 @@ async function main() {
   } as { [chainId: number]: string }
   const chainName = chains[chainId]
 
-  const { tokenURI } = await prompt.get({
+  const { name, symbol } = await prompt.get({
     properties: {
-      tokenURI: {
+      name: {
         required: true,
         type: 'string',
-        message: 'Token URI',
+        message: 'Contract name',
+      },
+      symbol: {
+        required: true,
+        type: 'string',
+        message: 'Contract symbol',
       },
     },
   })
 
-  const contractName = 'SCNikitaAppreciatesYou'
+  const contractName = 'SCNFTDrop'
   console.log(`Deploying ${contractName}...`)
   const factory = await ethers.getContractFactory(contractName)
-  const contract = await factory.deploy(tokenURI)
+  const contract = await factory.deploy(name, symbol)
 
   console.log('Deploy tx gas price:', contract.deployTransaction.gasPrice)
   console.log('Deploy tx gas limit:', contract.deployTransaction.gasLimit)
@@ -49,7 +54,7 @@ async function main() {
   try {
     await run('verify:verify', {
       address,
-      constructorArguments: [tokenURI],
+      constructorArguments: [name, symbol],
     })
   } catch (err) {
     console.log(

@@ -3,17 +3,27 @@ import { prepareAllBatches } from '../src/index'
 import prompt from 'prompt'
 
 async function main() {
-  const { contractAddress } = await prompt.get({
+  const { contractAddress, tokenId, amount } = await prompt.get({
     properties: {
       contractAddress: {
         required: true,
         type: 'string',
         message: 'Contract address',
       },
+      tokenId: {
+        required: true,
+        type: 'number',
+        message: 'Token ID',
+      },
+      amount: {
+        required: true,
+        type: 'number',
+        message: 'Amount',
+      },
     },
   })
 
-  const factory = await ethers.getContractFactory('SCNikitaAppreciatesYou')
+  const factory = await ethers.getContractFactory('SCNFTDrop')
   const contract = await factory.attach(contractAddress)
   const batches = prepareAllBatches()
 
@@ -21,7 +31,7 @@ async function main() {
 
   for (const [i, batch] of batches.entries()) {
     try {
-      const tx = await contract.mint(batch)
+      const tx = await contract.mint(batch, tokenId, amount)
       const receipt = await tx.wait()
       console.log(
         `Batch ${i} minted `,
