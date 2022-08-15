@@ -1,4 +1,4 @@
-# Commemorative NFT collection for early adopters
+# Commemorative NFT collection contract for early adopters
 
 ## Usage
 
