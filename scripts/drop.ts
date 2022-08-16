@@ -14,11 +14,13 @@ async function main() {
         required: true,
         type: 'number',
         message: 'Token ID',
+        default: 0,
       },
       amount: {
         required: true,
         type: 'number',
         message: 'Amount',
+        default: 1,
       },
     },
   })
