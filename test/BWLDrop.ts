@@ -1,7 +1,7 @@
 import { ethers } from 'hardhat'
 import { expect } from 'chai'
 import { getBatchOfAddresses, prepareAllBatches } from '../src'
-import holders from '../src/verifiedHolders'
+import { holders } from '../src/index'
 
 function constructURI(id: number): string {
   return `https://game.example/api/item/${id}.json`

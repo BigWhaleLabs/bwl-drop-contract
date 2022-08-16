@@ -9,7 +9,7 @@ const holdersWithDuplicates = readFileSync(
   .split('\n')
   .filter((v) => !!v)
 console.log('Holders with duplicates:', holdersWithDuplicates.length)
-const holders = Object.keys(
+export const holders = Object.keys(
   holdersWithDuplicates.reduce(
     (acc, v) => ({
       ...acc,
