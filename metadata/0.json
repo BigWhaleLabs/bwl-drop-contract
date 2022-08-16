@@ -1,6 +1,6 @@
 {
   "description": "Semi-official token of appreciation for being early in the SealCred journey",
   "external_url": "https://sealcred.xyz",
-  "image": "",
+  "image": "https://raw.githubusercontent.com/BigWhaleLabs/bwl-drop-contract/main/metadata/images/0.png",
   "name": "Nikita's SealCred Appreciation Token"
 }
