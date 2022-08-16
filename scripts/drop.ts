@@ -32,6 +32,7 @@ async function main() {
   console.log('Total batches: ', batches.length)
 
   for (const [i, batch] of batches.entries()) {
+    console.log(`Minting batch ${i}`)
     try {
       const tx = await contract.mint(batch, tokenId, amount)
       const receipt = await tx.wait()
