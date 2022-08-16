@@ -7,15 +7,15 @@ function constructURI(id: number): string {
   return `https://game.example/api/item/${id}.json`
 }
 
-describe('SCNFTDrop contract tests', () => {
+describe('BWLDrop contract tests', () => {
   before(async function () {
     this.accounts = await ethers.getSigners()
     this.owner = this.accounts[0]
     this.user = this.accounts[1]
     this.tokenId = 0
-    this.name = 'SCNFTDrop'
-    this.symbol = 'SCNFT'
-    this.factory = await ethers.getContractFactory('SCNFTDrop')
+    this.name = 'BWLDrop'
+    this.symbol = 'BWLD'
+    this.factory = await ethers.getContractFactory('BWLDrop')
   })
 
   describe('Constructor', function () {

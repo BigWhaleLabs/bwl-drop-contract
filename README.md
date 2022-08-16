@@ -2,7 +2,7 @@
 
 ## Usage
 
-1. Clone the repository with `git clone git@github.com:BigWhaleLabs/seal-cred-nft-drop-contract`
+1. Clone the repository with `git clone git@github.com:BigWhaleLabs/bwl-drop-contract`
 2. Install the dependencies with `yarn`
 3. Add environment variables to your `.env` file
 4. Run the scripts below

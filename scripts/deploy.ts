@@ -35,7 +35,7 @@ async function main() {
     },
   })
 
-  const contractName = 'SCNFTDrop'
+  const contractName = 'BWLDrop'
   console.log(`Deploying ${contractName}...`)
   const factory = await ethers.getContractFactory(contractName)
   const contract = await factory.deploy(name, symbol)

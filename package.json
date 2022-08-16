@@ -1,10 +1,10 @@
 {
-  "name": "seal-cred-nft-drop-contract",
+  "name": "bwl-drop-contract",
   "version": "0.0.1",
-  "description": "Commemorative NFT collection for early adopters",
+  "description": "BWL NFT collections",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BigWhaleLabs/seal-cred-nft-drop-contract"
+    "url": "git+https://github.com/BigWhaleLabs/bwl-nft-drop-contract"
   },
   "license": "MIT",
   "np": {

@@ -62,7 +62,7 @@ pragma solidity ^0.8.14;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract SCNFTDrop is ERC1155, Ownable {
+contract BWLDrop is ERC1155, Ownable {
   string public name;
   string public symbol;
 

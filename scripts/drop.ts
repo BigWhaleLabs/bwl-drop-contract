@@ -23,7 +23,7 @@ async function main() {
     },
   })
 
-  const factory = await ethers.getContractFactory('SCNFTDrop')
+  const factory = await ethers.getContractFactory('BWLDrop')
   const contract = await factory.attach(contractAddress)
   const batches = prepareAllBatches()
 
