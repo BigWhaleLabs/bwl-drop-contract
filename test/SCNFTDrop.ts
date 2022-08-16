@@ -88,11 +88,13 @@ describe('SCNFTDrop contract tests', () => {
       }
 
       for (const [i, address] of holders.entries()) {
-        console.log(
-          address,
-          i,
-          await this.contract.balanceOf(address, this.tokenId)
-        )
+        if (i % 1000 === 0) {
+          console.log(
+            address,
+            i,
+            await this.contract.balanceOf(address, this.tokenId)
+          )
+        }
         expect(await this.contract.balanceOf(address, this.tokenId)).to.equal(1)
       }
     })
