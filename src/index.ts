@@ -1,23 +1,24 @@
-import { cwd } from 'process'
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
+// import { cwd } from 'process'
+// import { readFileSync } from 'fs'
+// import { resolve } from 'path'
 
-const holdersWithDuplicates = readFileSync(
-  resolve(cwd(), 'src/holders.txt'),
-  'utf8'
-)
-  .split('\n')
-  .filter((v) => !!v)
-console.log('Holders with duplicates:', holdersWithDuplicates.length)
-export const holders = Object.keys(
-  holdersWithDuplicates.reduce(
-    (acc, v) => ({
-      ...acc,
-      [v]: true,
-    }),
-    {} as { [key: string]: boolean }
-  )
-)
+// const holdersWithDuplicates = readFileSync(
+//   resolve(cwd(), 'src/holders.txt'),
+//   'utf8'
+// )
+//   .split('\n')
+//   .filter((v) => !!v)
+// console.log('Holders with duplicates:', holdersWithDuplicates.length)
+// export const holders = Object.keys(
+//   holdersWithDuplicates.reduce(
+//     (acc, v) => ({
+//       ...acc,
+//       [v]: true,
+//     }),
+//     {} as { [key: string]: boolean }
+//   )
+// )
+export const holders = []
 console.log('Holders:', holders.length)
 
 export function getBatchOfAddresses(start: number, end: number): string[] {

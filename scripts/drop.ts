@@ -9,6 +9,7 @@ async function main() {
         required: true,
         type: 'string',
         message: 'Contract address',
+        default: '0x32b6ca2af210f9422a262ff20e42331eaa92dfae',
       },
       tokenId: {
         required: true,
@@ -38,7 +39,7 @@ async function main() {
       const receipt = await tx.wait()
       console.log(
         `Batch ${i} minted `,
-        `https://$polygonscan.com/tx/${receipt.transactionHash}`
+        `https://polygonscan.com/tx/${receipt.transactionHash}`
       )
     } catch (error) {
       console.log(`Batch ${i} minting failed: `, error)
