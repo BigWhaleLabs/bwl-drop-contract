@@ -1,33 +1,19 @@
-// import { cwd } from 'process'
-// import { readFileSync } from 'fs'
-// import { resolve } from 'path'
+import { cwd } from 'process'
+import { readFileSync } from 'fs'
+import { resolve } from 'path'
 
-// const holdersWithDuplicates = readFileSync(
-//   resolve(cwd(), 'src/holders.txt'),
-//   'utf8'
-// )
-//   .split('\n')
-//   .filter((v) => !!v)
-// console.log('Holders with duplicates:', holdersWithDuplicates.length)
-// export const holders = Object.keys(
-//   holdersWithDuplicates.reduce(
-//     (acc, v) => ({
-//       ...acc,
-//       [v]: true,
-//     }),
-//     {} as { [key: string]: boolean }
-//   )
-// )
-export const holders = []
+const holders = Object.entries(
+  JSON.parse(readFileSync(resolve(cwd(), 'src', 'holders_1.json'), 'utf8'))
+).sort((a, b) => Number(b[1]) - Number(a[1])) as [string, number][]
 console.log('Holders:', holders.length)
 
-export function getBatchOfAddresses(start: number, end: number): string[] {
+export function getBatchOfAddresses(start: number, end: number) {
   return holders.slice(start, end)
 }
 
 export function prepareAllBatches() {
   const batchStep = 500
-  const batches = [] as string[][]
+  const batches = [] as [string, number][][]
   for (let i = 0; i < holders.length; i += batchStep) {
     const batch = getBatchOfAddresses(i, i + batchStep)
     batches.push(batch)

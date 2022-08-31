@@ -3,7 +3,7 @@ import { prepareAllBatches } from '../src/index'
 import prompt from 'prompt'
 
 async function main() {
-  const { contractAddress, tokenId, amount } = await prompt.get({
+  const { contractAddress, tokenId } = await prompt.get({
     properties: {
       contractAddress: {
         required: true,
@@ -15,12 +15,6 @@ async function main() {
         required: true,
         type: 'number',
         message: 'Token ID',
-        default: 0,
-      },
-      amount: {
-        required: true,
-        type: 'number',
-        message: 'Amount',
         default: 1,
       },
     },
@@ -35,7 +29,14 @@ async function main() {
   for (const [i, batch] of batches.entries()) {
     console.log(`Minting batch ${i}`)
     try {
-      const tx = await contract.mint(batch, tokenId, amount)
+      const tx = await contract.mintBatch(
+        batch.map(([address]) => address),
+        tokenId,
+        batch.map(([, amount]) => amount),
+        {
+          gasPrice: 50000000000,
+        }
+      )
       const receipt = await tx.wait()
       console.log(
         `Batch ${i} minted `,
