@@ -29,12 +29,18 @@ async function main() {
   for (const [i, batch] of batches.entries()) {
     console.log(`Minting batch ${i}`)
     try {
+      const gasLimit = await contract.estimateGas.mintBatch(
+        batch.map(([address]) => address),
+        new Array(batch.length).fill(tokenId),
+        batch.map(([, amount]) => amount)
+      )
       const tx = await contract.mintBatch(
         batch.map(([address]) => address),
-        tokenId,
+        new Array(batch.length).fill(tokenId),
         batch.map(([, amount]) => amount),
         {
           gasPrice: 50000000000,
+          gasLimit,
         }
       )
       const receipt = await tx.wait()
