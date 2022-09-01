@@ -85,11 +85,11 @@ contract BWLDrop is ERC1155, Ownable {
 
   function mintBatch(
     address[] calldata _addresses,
-    uint256[] memory _tokenIds,
-    uint256[] memory _amounts
+    uint256[][] memory _tokenIds,
+    uint256[][] memory _amounts
   ) external onlyOwner {
     for (uint256 i = 0; i < _addresses.length; ++i) {
-      _mintBatch(_addresses[i], _tokenIds, _amounts, "0x");
+      _mintBatch(_addresses[i], _tokenIds[i], _amounts[i], "0x");
     }
   }
 
