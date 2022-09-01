@@ -26,13 +26,13 @@ async function main() {
         required: true,
         type: 'string',
         message: 'Contract name',
-        default: 'BWLDrop',
+        default: 'BWLDrop2',
       },
       symbol: {
         required: true,
         type: 'string',
         message: 'Contract symbol',
-        default: 'BWLD',
+        default: 'BWLD2',
       },
     },
   })
