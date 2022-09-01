@@ -32,6 +32,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@big-whale-labs/constants@npm:^0.1.22":
+  version: 0.1.22
+  resolution: "@big-whale-labs/constants@npm:0.1.22"
+  checksum: e22643d888336ae0e4a2eded767b21bd482a096345899dbceefc6895cd3d1338f88338819acbc505e52eb29a7ab49fc16444362a5ea58da8d87d0079c814883b
+  languageName: node
+  linkType: hard
+
 "@colors/colors@npm:1.5.0":
   version: 1.5.0
   resolution: "@colors/colors@npm:1.5.0"
@@ -3613,6 +3620,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bwl-drop-contract@workspace:."
   dependencies:
+    "@big-whale-labs/constants": ^0.1.22
     "@nomiclabs/hardhat-ethers": ^2.1.1
     "@nomiclabs/hardhat-etherscan": ^3.1.0
     "@nomiclabs/hardhat-waffle": ^2.0.3
