@@ -9,13 +9,13 @@ async function main() {
         required: true,
         type: 'string',
         message: 'Contract address',
-        default: '0x32b6ca2af210f9422a262ff20e42331eaa92dfae',
+        default: '0xAEeFFeEb4Ab7B807161f93c4A56A6B9b340f582C',
       },
       tokenId: {
         required: true,
         type: 'number',
         message: 'Token ID',
-        default: 1,
+        default: 2,
       },
     },
   })
@@ -31,12 +31,12 @@ async function main() {
     try {
       const gasLimit = await contract.estimateGas.mintBatch(
         batch.map(([address]) => address),
-        new Array(batch.length).fill(tokenId),
+        new Array(batch.length).fill([tokenId]),
         batch.map(([, amount]) => [amount])
       )
       const tx = await contract.mintBatch(
         batch.map(([address]) => address),
-        new Array(batch.length).fill(tokenId),
+        new Array(batch.length).fill([tokenId]),
         batch.map(([, amount]) => [amount]),
         {
           gasPrice: 50000000000,
