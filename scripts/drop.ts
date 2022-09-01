@@ -32,12 +32,12 @@ async function main() {
       const gasLimit = await contract.estimateGas.mintBatch(
         batch.map(([address]) => address),
         new Array(batch.length).fill(tokenId),
-        batch.map(([, amount]) => amount)
+        batch.map(([, amount]) => [amount])
       )
       const tx = await contract.mintBatch(
         batch.map(([address]) => address),
         new Array(batch.length).fill(tokenId),
-        batch.map(([, amount]) => amount),
+        batch.map(([, amount]) => [amount]),
         {
           gasPrice: 50000000000,
           gasLimit,
