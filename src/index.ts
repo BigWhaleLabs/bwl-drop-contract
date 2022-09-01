@@ -25,3 +25,12 @@ export function prepareAllBatches() {
   }
   return batches
 }
+export function prepareAllBatchesForMint() {
+  const batchStep = 100
+  const batches = [] as string[][]
+  for (let i = 0; i < holders.length; i += batchStep) {
+    const batch = getBatchOfAddresses(i, i + batchStep).map((batch) => batch[0])
+    batches.push(batch)
+  }
+  return batches
+}

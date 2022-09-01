@@ -1,6 +1,10 @@
 import { ethers } from 'hardhat'
 import { expect } from 'chai'
-import { getBatchOfAddresses, prepareAllBatches } from '../src'
+import {
+  getBatchOfAddresses,
+  prepareAllBatches,
+  prepareAllBatchesForMint,
+} from '../src'
 import { holders } from '../src/index'
 
 function constructURI(id: number): string {
@@ -42,11 +46,21 @@ describe('BWLDrop contract tests', () => {
         this.contractWithIncorrectOwner.setURI(tokenId, newURI)
       ).to.be.revertedWith('Ownable: caller is not the owner')
     })
-    it('should not be able to call mint', async function () {
-      const addresses = getBatchOfAddresses(0, 500)
-
+    it('should not be able to call "mint"', async function () {
+      const batch = getBatchOfAddresses(0, 500)
+      const serializedBatch = batch.map((pair) => pair[0])
       await expect(
-        this.contractWithIncorrectOwner.mint(addresses, this.tokenId, 1)
+        this.contractWithIncorrectOwner.mint(serializedBatch, this.tokenId, 1)
+      ).to.be.revertedWith('Ownable: caller is not the owner')
+    })
+    it('should not be able to call "mintBatch"', async function () {
+      const batch = getBatchOfAddresses(0, 100)
+      await expect(
+        this.contractWithIncorrectOwner.mintBatch(
+          batch.map(([address]) => address),
+          new Array(batch.length).fill([1]),
+          batch.map(([, amount]) => [amount])
+        )
       ).to.be.revertedWith('Ownable: caller is not the owner')
     })
   })
@@ -66,36 +80,76 @@ describe('BWLDrop contract tests', () => {
 
       expect(await this.contract.tokenURI(tokenId)).to.equal(newURI)
     })
-    it('should mint one batch', async function () {
-      const addresses = getBatchOfAddresses(0, 500)
-      const tx = await this.contract.mint(addresses, this.tokenId, 1)
+    it('should "mintBatch" with one batch', async function () {
+      const batch = getBatchOfAddresses(0, 100)
+      const tx = await this.contract.mintBatch(
+        batch.map(([address]) => address),
+        new Array(batch.length).fill([1]),
+        batch.map(([, amount]) => [amount])
+      )
       const receipt = await tx.wait()
 
       expect(receipt.gasUsed).to.be.below(30000000)
 
-      for (const address of addresses) {
+      for (let i = 0; i < batch.length; i++) {
+        expect(await this.contract.balanceOf(batch[i][0], 1)).to.equal(
+          batch[i][1]
+        )
+      }
+    })
+    it('should "mintBatch" all batch', async function () {
+      // Mint 5 batches by 100 addresses with specific amounts
+      const batches = prepareAllBatches().slice(0, 5)
+      for (const batch of batches) {
+        const tx = await this.contract.mintBatch(
+          batch.map(([address]) => address),
+          new Array(batch.length).fill([this.tokenId]),
+          batch.map(([, amount]) => [amount])
+        )
+        const receipt = await tx.wait()
+        expect(receipt.gasUsed).to.be.below(30000000)
+      }
+      for (const batch of batches) {
+        for (const pair of batch) {
+          expect(await this.contract.balanceOf(pair[0], this.tokenId)).to.equal(
+            pair[1]
+          )
+        }
+      }
+    })
+    it('should "mint" one batch', async function () {
+      const batch = getBatchOfAddresses(0, 500)
+      const serializedBatch = batch.map((pair) => pair[0])
+      const tx = await this.contract.mint(serializedBatch, this.tokenId, 1)
+      const receipt = await tx.wait()
+
+      expect(receipt.gasUsed).to.be.below(30000000)
+
+      for (const address of serializedBatch) {
         expect(await this.contract.balanceOf(address, this.tokenId)).to.equal(1)
       }
-      console.log(await this.contract.uri(0))
     })
-    it('should mint all batches', async function () {
-      const batches = prepareAllBatches()
-
+    it('should "mint" all batches', async function () {
+      // Mint 5 batches by 100 addresses
+      const dropHolders = holders.slice(0, 500)
+      const batches = prepareAllBatchesForMint().slice(0, 5)
       for (const batch of batches) {
         const tx = await this.contract.mint(batch, this.tokenId, 1)
         const receipt = await tx.wait()
         expect(receipt.gasUsed).to.be.below(30000000)
       }
 
-      for (const [i, address] of holders.entries()) {
-        if (i % 1000 === 0) {
+      for (const [i, address] of dropHolders.entries()) {
+        if (i % 100 === 0) {
           console.log(
             address,
-            i,
-            await this.contract.balanceOf(address, this.tokenId)
+            i / 100,
+            (await this.contract.balanceOf(address[0], this.tokenId)).toString()
           )
         }
-        expect(await this.contract.balanceOf(address, this.tokenId)).to.equal(1)
+        expect(
+          await this.contract.balanceOf(address[0], this.tokenId)
+        ).to.equal(1)
       }
     })
   })
