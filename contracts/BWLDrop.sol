@@ -97,9 +97,10 @@ contract BWLDrop is ERC1155, Ownable {
     _burn(msg.sender, _id, _amount);
   }
 
-  function burnBatch(uint256[] memory _ids, uint256[] memory _amounts)
-    external
-  {
+  function burnBatch(
+    uint256[] memory _ids,
+    uint256[] memory _amounts
+  ) external {
     _burnBatch(msg.sender, _ids, _amounts);
   }
 
